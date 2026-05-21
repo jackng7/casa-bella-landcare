@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Bella Landcare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green-dark: #2d4a3e;
+      --green-mid: #3d6b5a;
+      --green-light: #5a9e7f;
+      --cream: #f5f0e8;
+      --cream-dark: #e8e0d0;
+      --gold: #c9a84c;
+      --text: #2c2c2c;
+      --text-light: #5a5a5a;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(45, 74, 62, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.5px;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--cream); text-decoration: none;
+      font-size: 0.9rem; font-weight: 400;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--cream);
+      transition: 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80') center/cover;
+      opacity: 0.15;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 900px; text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201, 168, 76, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.4rem 1.2rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--white); font-weight: 700;
+      line-height: 1.15; margin-bottom: 1.5rem;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.15rem; max-width: 600px; margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+    .btn {
+      display: inline-block; padding: 1rem 2.5rem;
+      border: none; border-radius: 50px; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--green-dark);
+    }
+    .btn-primary:hover {
+      background: #d4b45a; transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201,168,76,0.3);
+    }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover {
+      border-color: var(--white); background: rgba(255,255,255,0.1);
+    }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; text-align: center;
+      color: var(--green-dark); margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      text-align: center; color: var(--text-light);
+      font-size: 1rem; margin-bottom: 3rem;
+    }
+
+    /* SERVICES */
+    .services { background: var(--white); }
+    .services-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; max-width: 1000px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--cream); border-radius: 16px;
+      padding: 2.5rem 2rem; text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .service-card.featured {
+      grid-column: 1 / -1;
+      background: var(--green-dark); color: var(--white);
+      padding: 3rem 2rem;
+    }
+    .service-card.featured h3 {
+      color: var(--gold); font-size: 1.6rem; margin-bottom: 0.8rem;
+    }
+    .service-card.featured p { color: rgba(255,255,255,0.8); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+    .service-card.featured .service-icon {
+      width: 80px; height: 80px;
+      background: var(--gold); color: var(--green-dark);
+    }
+    .service-card.featured .service-icon svg { width: 36px; height: 36px; }
+    .service-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--green-mid); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .service-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 0.6rem;
+      color: var(--green-dark);
+    }
+    .service-card p { color: var(--text-light); font-size: 0.9rem; }
+
+    /* MY WORK */
+    .work { background: var(--cream); }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem; max-width: 1100px; margin: 0 auto;
+    }
+    .work-item {
+      border-radius: 16px; overflow: hidden;
+      aspect-ratio: 4/3; position: relative;
+      cursor: pointer;
+    }
+    .work-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .work-item:hover img { transform: scale(1.05); }
+    .work-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 2rem 1.5rem 1.2rem; color: var(--white);
+    }
+    .work-overlay h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+    .work-overlay p { font-size: 0.8rem; opacity: 0.8; }
+
+    /* ABOUT */
+    .about { background: var(--white); }
+    .about-container {
+      display: flex; align-items: center; gap: 4rem;
+      max-width: 1000px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .about-image {
+      flex: 0 0 280px;
+    }
+    .about-image img {
+      width: 280px; height: 340px; object-fit: cover;
+      object-position: top;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .about-text { flex: 1; min-width: 300px; }
+    .about-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--green-dark); margin-bottom: 1rem;
+    }
+    .about-text p {
+      color: var(--text-light); margin-bottom: 1rem; font-size: 0.95rem;
+    }
+    .about-stats {
+      display: flex; gap: 2rem; margin-top: 1.5rem;
+    }
+    .stat { text-align: center; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--green-mid);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-light); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      z-index: 200; display: none;
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 24px;
+      padding: 2.5rem; max-width: 480px; width: 100%;
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--text-light);
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--cream); }
+    .modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--green-dark); margin-bottom: 0.4rem;
+    }
+    .modal > p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-size: 0.85rem; font-weight: 500;
+      margin-bottom: 0.3rem; color: var(--text);
+    }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 0.75rem 1rem;
+      border: 2px solid var(--cream-dark); border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem;
+      transition: border-color 0.3s;
+      background: var(--cream);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--green-light);
+      background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%; padding: 1rem;
+      background: var(--green-mid); color: var(--white);
+      border: none; border-radius: 12px; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      transition: background 0.3s;
+    }
+    .form-submit:hover { background: var(--green-dark); }
+    .success-msg {
+      display: none; text-align: center; padding: 2rem 0;
+    }
+    .success-msg svg { width: 60px; height: 60px; color: var(--green-mid); margin-bottom: 1rem; }
+    .success-msg h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--green-dark); margin-bottom: 0.5rem;
+    }
+    .success-msg p { color: var(--text-light); font-size: 0.9rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--green-dark); color: rgba(255,255,255,0.7);
+      text-align: center; padding: 2.5rem 2rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--green-dark);
+        padding: 1rem 2rem 2rem; gap: 1rem;
+      }
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-content .btn-outline { margin-left: 0; margin-top: 0.8rem; display: inline-block; }
+      .about-container { flex-direction: column; text-align: center; }
+      .about-stats { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Casa <span>Bella</span> Landcare</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">My Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Get in Touch</a></li>
+      <li><a href="#" onclick="openModal(); return false;">Join Waitlist</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Efficiency, Reliability and Attention to Detail</div>
+      <h1>Refined Intention,<br>Natural Ease</h1>
+      <p>5 years of experience specializing in maintaining healthy, happy properties. Finding solutions, restoring the balance of nature, while tailoring to the clients' preference.</p>
+      <a href="#" class="btn btn-primary" onclick="openModal(); return false;">Join the Waitlist</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <h2 class="section-title">What I Do</h2>
+    <p class="section-subtitle">Reliable, quality landcare for homes across Greater Victoria.</p>
+    <div class="services-grid">
+      <div class="service-card featured">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 2L4 7v5c0 5.25 3.4 10.15 8 11 4.6-.85 8-5.75 8-11V7l-8-5z"/><line x1="9" y1="12" x2="15" y2="12"/></svg></div>
+        <h3>Invasive Removals</h3>
+        <p>Identification and removal of invasive plant species &mdash; reclaiming your property and protecting local ecosystems.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 22c-4 0-8-2-8-6v-2c0-2 2-4 4-4 1 0 2 .5 2.5 1.5.3.5.8 1 1.5 1s1.2-.5 1.5-1C14 10.5 15 10 16 10c2 0 4 2 4 4v2c0 4-4 6-8 6z"/><line x1="12" y1="2" x2="12" y2="10"/><line x1="9" y1="4" x2="12" y2="7"/><line x1="15" y1="4" x2="12" y2="7"/></svg></div>
+        <h3>Garden Maintenance</h3>
+        <p>Weeding, pruning, mulching, and planting to keep your beds looking sharp every season.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Handyman</h3>
+        <p>Painting, touch-ups, and general handyman work to keep your property looking its best inside and out.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L2 21l1-4c-1.49-2.77-.83-5.81 1-8 2.68-3.22 7.02-4.69 11-4V2l7 7-7 7v-3.5c-2.51-.47-4.95-.23-7 1.5"/></svg></div>
+        <h3>Landscape Material</h3>
+        <p>Mulching, landscape fabric installation, and replanting native species to restore areas cleared of invasives.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.9C15.5 4.9 17 3.5 17 3.5s1.5 2.5 1.5 6.5c0 2-1 4-2 5.5"/><path d="M12 20a5 5 0 003-9c-2.5 1-4.5 3-5 6"/><line x1="12" y1="20" x2="12" y2="22"/></svg></div>
+        <h3>Seasonal Cleanup</h3>
+        <p>Spring and fall cleanups, leaf removal, gutter clearing, and property prep to keep everything tidy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY WORK -->
+  <section class="work" id="work">
+    <h2 class="section-title">My Work</h2>
+    <p class="section-subtitle">A few recent projects across Greater Victoria.</p>
+    <div class="work-grid">
+      <div class="work-item">
+        <img src="images/work-5.jpg" alt="Garden pathway with brick retaining wall and flowers" loading="lazy">
+        <div class="work-overlay">
+          <h4>Garden Pathway & Retaining Wall</h4>
+          <p>Brick Walkway with Native Planting</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="images/work-3.jpg" alt="Maintained green lawn with trees" loading="lazy">
+        <div class="work-overlay">
+          <h4>Full Lawn Maintenance</h4>
+          <p>Property Upkeep</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="images/work-1.jpg" alt="Backyard with stepping stones and green lawn" loading="lazy">
+        <div class="work-overlay">
+          <h4>Backyard Stepping Stones & Cleanup</h4>
+          <p>Residential Property</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="images/work-7.jpg" alt="Chisholm Farms sign with landscaping" loading="lazy">
+        <div class="work-overlay">
+          <h4>Commercial Signage Landscaping</h4>
+          <p>Chisholm Farms</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="images/work-8.jpg" alt="Large property with gravel path and maintained lawn" loading="lazy">
+        <div class="work-overlay">
+          <h4>Property Grounds Maintenance</h4>
+          <p>Large Acreage Upkeep</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="images/work-2.jpg" alt="New seedlings sprouting in fresh soil" loading="lazy">
+        <div class="work-overlay">
+          <h4>Fresh Planting & Soil Prep</h4>
+          <p>Garden Bed Restoration</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-container">
+      <div class="about-image">
+        <img src="headshot.jpg" alt="Matteo Hilton">
+      </div>
+      <div class="about-text">
+        <h2>Meet Matteo</h2>
+        <p>I'm Matteo Hilton. A varsity athlete at the University of Victoria, neuroscience student, and founder of Casa Bella Landcare. I have 5 years of experience working in the field. Prior to landcare, I have 6 years of experience working at Applied Bionomics in greenhouse environments, ensuring the good health and quality of plants and small organisms, as well as orchestrating a small research project.</p>
+        <p>Whether it is garden care or a full invasive removal and native reintroduction, I approach each job with the highest level of detail, quality and work ethic. I believe outdoor space should feel like the sanctuary of your home, and I put everything I have into making that your reality.</p>
+        <p>If you're in Greater Victoria and are looking for landcare from someone you can trust and build a rapport with, I'd love to hear from you.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Satisfaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET IN TOUCH -->
+  <section id="contact" style="background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); text-align: center; padding: 5rem 2rem;">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--white); margin-bottom: 0.5rem;">Get in Touch</h2>
+    <p style="color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; font-size: 1rem;">Have a question or ready to get started? Reach out directly.</p>
+    <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+      <div style="text-align: center;">
+        <div style="font-size: 1.8rem; margin-bottom: 0.4rem;">&#128222;</div>
+        <div style="color: var(--gold); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.3rem;">Phone</div>
+        <a href="tel:+12509865970" style="color: var(--white); text-decoration: none; font-size: 1.15rem; font-weight: 500;">(250) 986-5970</a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 1.8rem; margin-bottom: 0.4rem;">&#9993;</div>
+        <div style="color: var(--gold); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.3rem;">Email</div>
+        <a href="mailto:matteohilton@gmail.com" style="color: var(--white); text-decoration: none; font-size: 1.15rem; font-weight: 500;">matteohilton@gmail.com</a>
+      </div>
+    </div>
+    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">Or join the waitlist to secure your spot for the season.</p>
+    <a href="#" class="btn btn-primary" onclick="openModal(); return false;">Join the Waitlist</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Casa Bella Landcare &middot; Victoria, BC &middot; <a href="#" onclick="openModal(); return false;">Join Waitlist</a></p>
+  </footer>
+
+  <!-- WAITLIST MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="formView">
+        <h2>Join the Waitlist</h2>
+        <p>Fill in your details and I'll reach out to get you booked in.</p>
+        <!-- TODO: Replace matteohilton@gmail.com with Matteo's actual email -->
+        <form id="waitlistForm" action="https://formsubmit.co/matteohilton@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Waitlist Submission — Casa Bella Landcare">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="">
+          <input type="text" name="_honey" style="display:none">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(250) 555-1234" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="job">What do you need done?</label>
+            <textarea id="job" name="job" placeholder="Describe the job &mdash; lawn care, garden cleanup, landscaping project, etc." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Submit</button>
+        </form>
+      </div>
+      <div class="success-msg" id="successView">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3>You're on the list!</h3>
+        <p>Thanks for your interest. Matteo will be in touch shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+      // Reset after close
+      setTimeout(() => {
+        document.getElementById('formView').style.display = '';
+        document.getElementById('successView').style.display = 'none';
+        document.getElementById('waitlistForm').reset();
+      }, 300);
+    }
+
+    function closeModalOutside(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+
+    // Intercept form submit to show success message without leaving the page
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function() {
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+      }).catch(function() {
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+      });
+    });
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
